@@ -15,46 +15,42 @@ class RegisterPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Form(
-              child: Column(
-                children: [
-                  const TextFormFieldWidget(
-                    label: "Nome"
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const TextFormFieldWidget(
-                    label: "Email"
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const PasswordFormFieldWidget(
-                    label: "Senha"
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const PasswordFormFieldWidget(
-                    label: "Confirme a senha"
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ButtonPrimaryWidget(
-                    text: "Registrar", 
-                    onPressed: () {
-                      print("ddd");
-                    },
-                  ),
-                  
-                ],
-              )
-            )
-          ],
+        child: Form(
+          child: Column(
+            children: [
+              const TextFormFieldWidget(
+                label: "Nome"
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const TextFormFieldWidget(
+                label: "Email"
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const PasswordFormFieldWidget(
+                label: "Senha"
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              const PasswordFormFieldWidget(
+                label: "Confirme a senha"
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              ButtonPrimaryWidget(
+                text: "Registrar", 
+                onPressed: () {
+                  print("ddd");
+                },
+              ),
+              
+            ],
+          ),
         ),
       ),
     );
