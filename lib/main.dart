@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_app_provider_consumer/routes/route_generator.dart';
+import 'package:tasks_app_provider_consumer/styles/themes_app.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemesApp.primary,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      initialRoute: "/login",
       onGenerateRoute: RouteGenerator.generateRoutes,
     );
   }
