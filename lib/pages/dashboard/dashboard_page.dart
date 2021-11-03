@@ -21,7 +21,7 @@ class DashboardPage extends StatelessWidget {
           CardDashboard(
             text: "Perfil", 
             icon: Icons.person, 
-            onTap: () {}
+            onTap: () => Navigator.of(context).pushNamed("/user")
           ),
           CardDashboard(
             text: "Atividades", 
