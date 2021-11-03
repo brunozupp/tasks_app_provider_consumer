@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemesApp.primary,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/login",
+      initialRoute: "/dashboard",
       onGenerateRoute: RouteGenerator.generateRoutes,
     );
   }
