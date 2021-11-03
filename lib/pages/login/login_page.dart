@@ -40,7 +40,28 @@ class LoginPage extends StatelessWidget {
                       label: "Senha"
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 0,
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        child: const Text(
+                          "Esqueci minha senha",
+                          style: TextStyle(
+                            color: ColorsApp.primaryColor
+                          ),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                            if(states.contains(MaterialState.pressed)) return ColorsApp.primaryColor.withAlpha(25);
+
+                            return Colors.white;
+                          }),
+                        ),
+                        onPressed: () {
+
+                        }, 
+                      ),
                     ),
                     ButtonPrimaryWidget(
                       text: "Entrar", 
@@ -77,10 +98,8 @@ class LoginPage extends StatelessWidget {
                       height: 20,
                     ),
                     ButtonSecundaryWidget(
-                      text: "Entrar", 
-                      onPressed: () {
-                        print("dddwewe");
-                      },
+                      text: "Criar conta", 
+                      onPressed: () => Navigator.of(context).pushNamed("/register")
                     ),
                   ],
                 )
