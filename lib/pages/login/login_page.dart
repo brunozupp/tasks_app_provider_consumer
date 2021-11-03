@@ -58,9 +58,7 @@ class LoginPage extends StatelessWidget {
                             return Colors.white;
                           }),
                         ),
-                        onPressed: () {
-
-                        }, 
+                        onPressed: () => Navigator.of(context).pushNamed("/forget-password"), 
                       ),
                     ),
                     ButtonPrimaryWidget(

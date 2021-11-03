@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_app_provider_consumer/styles/colors_app.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/password_form_field_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/text_form_field_widget.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({ Key? key }) : super(key: key);
+class ForgetPasswordPage extends StatelessWidget {
+  const ForgetPasswordPage({ Key? key }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Criar conta"),
+        title: const Text("Recuperar senha"),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -21,36 +20,31 @@ class RegisterPage extends StatelessWidget {
               child: Column(
                 children: [
                   const TextFormFieldWidget(
-                    label: "Nome"
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const TextFormFieldWidget(
-                    label: "Email"
+                    label: "Email da conta perdida"
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   const PasswordFormFieldWidget(
-                    label: "Senha"
+                    label: "Nova senha"
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   const PasswordFormFieldWidget(
-                    label: "Confirme a senha"
+                    label: "Confirme a nova senha"
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   ButtonPrimaryWidget(
-                    text: "Registrar", 
+                    text: "Mudar senha", 
                     onPressed: () {
                       print("ddd");
                     },
                   ),
                   
+                
                 ],
               )
             )

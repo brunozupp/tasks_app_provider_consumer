@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tasks_app_provider_consumer/models/task.dart';
 import 'package:tasks_app_provider_consumer/pages/default/error_page.dart';
 import 'package:tasks_app_provider_consumer/pages/default/not_found_page.dart';
+import 'package:tasks_app_provider_consumer/pages/forget_password/forget_password_page.dart';
 import 'package:tasks_app_provider_consumer/pages/login/login_page.dart';
 import 'package:tasks_app_provider_consumer/pages/register/register_page.dart';
 import 'package:tasks_app_provider_consumer/pages/splash/splash_page.dart';
@@ -21,6 +22,9 @@ abstract class RouteGenerator {
 
       case "/login":
         return _goTo(const LoginPage());
+
+      case "/forget-password":
+        return _goTo(const ForgetPasswordPage());
 
       case "/register":
         return _goTo(const RegisterPage());
