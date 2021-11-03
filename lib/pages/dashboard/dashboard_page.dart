@@ -21,12 +21,12 @@ class DashboardPage extends StatelessWidget {
           CardDashboard(
             text: "Perfil", 
             icon: Icons.person, 
-            onTap: () => Navigator.of(context).pushNamed("/user")
+            onTap: () => Navigator.of(context).pushNamed("/user"),
           ),
           CardDashboard(
             text: "Atividades", 
             icon: Icons.task, 
-            onTap: () {}
+            onTap: () => Navigator.of(context).pushNamed("/tasks"),
           ),
         ],
       ),
