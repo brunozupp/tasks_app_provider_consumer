@@ -1,5 +1,7 @@
-class ResponseModel<T> {
+import 'package:tasks_app_provider_consumer/models/persistence/response_repository_model.dart';
 
+class ResponseModel {
+  
   final bool _success;
   bool get isSuccess => _success;
 
@@ -9,27 +11,11 @@ class ResponseModel<T> {
   final bool _notFound;
   bool get isNotFound => _notFound;
 
-  T? data;
   String? message;
 
-  ResponseModel.success({
-    this.data, this.message
-  }) :
-    _success = true,
-    _error = false,
-    _notFound = false;
-
-  ResponseModel.error({
-    this.message
-  }) :
-    _success = false,
-    _error = true,
-    _notFound = false;
-
-  ResponseModel.notFound({
-    this.message
-  }) :
-    _success = false,
-    _error = false,
-    _notFound = true;
+  ResponseModel.fromResponseRepositoryModel(ResponseRepositoryModel responseRepositoryModel) :
+    _success = responseRepositoryModel.isSuccess,
+    _notFound = responseRepositoryModel.isNotFound,
+    _error = responseRepositoryModel.isError,
+    message = responseRepositoryModel.message;
 }
