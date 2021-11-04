@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_app_provider_consumer/styles/colors_app.dart';
+import 'package:tasks_app_provider_consumer/view_models/register_view_model.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/password_form_field_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/text_form_field_widget.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({ Key? key }) : super(key: key);
+  RegisterPage({ Key? key }) : super(key: key);
+
+  final RegisterViewModel registerVM = RegisterViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -16,28 +18,39 @@ class RegisterPage extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
+          key: registerVM.formKey,
           child: Column(
             children: [
-              const TextFormFieldWidget(
-                label: "Nome"
+              TextFormFieldWidget(
+                label: "Nome",
+                controller: registerVM.nameController,
+                keyboardType: TextInputType.name,
+                validator: registerVM.validateName,
               ),
               const SizedBox(
                 height: 20,
               ),
-              const TextFormFieldWidget(
-                label: "Email"
+              TextFormFieldWidget(
+                label: "Email",
+                controller: registerVM.emailController,
+                keyboardType: TextInputType.emailAddress,
+                validator: registerVM.validateEmail,
               ),
               const SizedBox(
                 height: 20,
               ),
-              const PasswordFormFieldWidget(
-                label: "Senha"
+              PasswordFormFieldWidget(
+                label: "Senha",
+                controller: registerVM.passwordController,
+                validator: registerVM.validatePassword,
               ),
               const SizedBox(
                 height: 20,
               ),
-              const PasswordFormFieldWidget(
-                label: "Confirme a senha"
+              PasswordFormFieldWidget(
+                label: "Confirme a senha",
+                controller: registerVM.confirmPasswordController,
+                validator: registerVM.validateConfirmPassword,
               ),
               const SizedBox(
                 height: 20,
@@ -45,7 +58,9 @@ class RegisterPage extends StatelessWidget {
               ButtonPrimaryWidget(
                 text: "Registrar", 
                 onPressed: () {
-                  print("ddd");
+                  if(registerVM.validate()) {
+                    Navigator.of(context).pushNamedAndRemoveUntil("/dashboard", (e) => false);
+                  }
                 },
               ),
               

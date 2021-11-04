@@ -23,13 +23,13 @@ abstract class RouteGenerator {
         return _goTo(const SplashPage());
 
       case "/login":
-        return _goTo(const LoginPage());
+        return _goTo(LoginPage());
 
       case "/forget-password":
-        return _goTo(const ForgetPasswordPage());
+        return _goTo(ForgetPasswordPage());
 
       case "/register":
-        return _goTo(const RegisterPage());
+        return _goTo(RegisterPage());
 
       case "/tasks":
         return _goTo(const TasksListPage());

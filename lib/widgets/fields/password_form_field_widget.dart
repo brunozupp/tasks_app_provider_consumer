@@ -6,7 +6,6 @@ class PasswordFormFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
-  final TextInputType? keyboardType;
   final String label;
 
   const PasswordFormFieldWidget({ 
@@ -14,7 +13,6 @@ class PasswordFormFieldWidget extends StatefulWidget {
     this.controller,
     this.validator,
     this.onChanged,
-    this.keyboardType,
     required this.label,
   }) : super(key: key);
 
@@ -33,7 +31,6 @@ class _PasswordFormFieldWidgetState extends State<PasswordFormFieldWidget> {
       controller: widget.controller,
       validator: widget.validator,
       onChanged: widget.onChanged,
-      keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         focusedBorder: const OutlineInputBorder(

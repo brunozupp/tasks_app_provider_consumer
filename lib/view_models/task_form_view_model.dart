@@ -11,7 +11,7 @@ class TaskFormViewModel extends BaseViewModel {
   final descriptionController = TextEditingController();
   late Priority? priority;
 
-  TaskFormViewModel(Task? task) {
+  TaskFormViewModel({Task? task}) {
     userId = task?.userId;
     nameController.text = task?.name ?? "";
     descriptionController.text = task?.description ?? "";
@@ -31,7 +31,7 @@ class TaskFormViewModel extends BaseViewModel {
       return "Campo obrigatório";
     }
 
-    if(value.length != 150) {
+    if(value.length > 150) {
       return "Descrição deve possuir até 150 caracteres";
     }
 

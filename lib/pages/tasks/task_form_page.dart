@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_app_provider_consumer/models/enums/priority.dart';
 import 'package:tasks_app_provider_consumer/models/task.dart';
+import 'package:tasks_app_provider_consumer/view_models/task_form_view_model.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/dropdown_form_field_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/text_form_field_widget.dart';
@@ -10,10 +11,16 @@ class TaskFormPage extends StatelessWidget {
 
   final Task? task;
 
-  const TaskFormPage({ 
+  TaskFormPage({ 
     Key? key,
     this.task 
-  }) : super(key: key);
+  }) : super(key: key) {
+    taskFormVM = TaskFormViewModel(
+      task: task
+    );
+  }
+
+  late final TaskFormViewModel taskFormVM;
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +33,29 @@ class TaskFormPage extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
+          key: taskFormVM.formKey,
           child: Column(
             children: [
-              const TextFormFieldWidget(
-                label: "Nome"
+              TextFormFieldWidget(
+                label: "Nome",
+                controller: taskFormVM.nameController,
+                keyboardType: TextInputType.name,
+                validator: taskFormVM.validateName,
               ),
               const SizedBox(
                 height: 20,
               ),
-              const TextareaFormFieldWidget(
-                label: "Descrição"
+              TextareaFormFieldWidget(
+                label: "Descrição",
+                controller: taskFormVM.descriptionController,
+                validator: taskFormVM.validateDescription,
               ),
               const SizedBox(
                 height: 20,
               ),
               DropdownFormFieldWidget<Priority>(
+                value: taskFormVM.priority,
+                validator: taskFormVM.validatePriority,
                 onGenerateDescription: (priority) {
                   switch(priority) {
                     case Priority.normal:
@@ -55,7 +70,7 @@ class TaskFormPage extends StatelessWidget {
                 },
                 items: Priority.values, 
                 onChanged: (priority) {
-                  debugPrint(priority.toString());
+                  taskFormVM.priority = priority;
                 }, 
                 label: "Prioridade da tarefa",
               ),
@@ -65,7 +80,9 @@ class TaskFormPage extends StatelessWidget {
               ButtonPrimaryWidget(
                 text: task == null ? "Registrar" : "Editar", 
                 onPressed: () {
-                  print("ddd");
+                  if(taskFormVM.validate()) {
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
               

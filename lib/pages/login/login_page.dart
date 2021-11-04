@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_app_provider_consumer/styles/colors_app.dart';
+import 'package:tasks_app_provider_consumer/view_models/login_view_model.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_secundary_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/password_form_field_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/text_form_field_widget.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({ Key? key }) : super(key: key);
+  LoginPage({ Key? key }) : super(key: key);
+
+  final LoginViewModel loginVM = LoginViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +20,7 @@ class LoginPage extends StatelessWidget {
           child: Column(
             children: [
               Form(
+                key: loginVM.formKey,
                 child: Column(
                   children: [
                     const Text(
@@ -30,14 +34,19 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    const TextFormFieldWidget(
-                      label: "Email"
+                    TextFormFieldWidget(
+                      label: "Email",
+                      controller: loginVM.emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: loginVM.validateEmail,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const PasswordFormFieldWidget(
-                      label: "Senha"
+                    PasswordFormFieldWidget(
+                      label: "Senha",
+                      controller: loginVM.passwordController,
+                      validator: loginVM.validatePassword,
                     ),
                     const SizedBox(
                       height: 0,
@@ -63,7 +72,11 @@ class LoginPage extends StatelessWidget {
                     ),
                     ButtonPrimaryWidget(
                       text: "Entrar", 
-                      onPressed: () => Navigator.of(context).pushNamed("/dashboard"),
+                      onPressed: () {
+                        if(loginVM.validate()) {
+                          Navigator.of(context).pushNamedAndRemoveUntil("/dashboard", (e) => false);
+                        }
+                      },
                     ),
                     const SizedBox(
                       height: 20,

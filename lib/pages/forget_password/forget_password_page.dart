@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_app_provider_consumer/view_models/forget_password_view_model.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/password_form_field_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/text_form_field_widget.dart';
 
 class ForgetPasswordPage extends StatelessWidget {
-  const ForgetPasswordPage({ Key? key }) : super(key: key);
+  ForgetPasswordPage({ Key? key }) : super(key: key);
+
+  final ForgetPasswordViewModel forgetPasswordViewModel = ForgetPasswordViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +20,30 @@ class ForgetPasswordPage extends StatelessWidget {
         child: Column(
           children: [
             Form(
+              key: forgetPasswordViewModel.formKey,
               child: Column(
                 children: [
-                  const TextFormFieldWidget(
-                    label: "Email da conta perdida"
+                  TextFormFieldWidget(
+                    label: "Email da conta perdida",
+                    controller: forgetPasswordViewModel.emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: forgetPasswordViewModel.validateEmail,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const PasswordFormFieldWidget(
-                    label: "Nova senha"
+                  PasswordFormFieldWidget(
+                    label: "Nova senha",
+                    controller: forgetPasswordViewModel.passwordController,
+                    validator: forgetPasswordViewModel.validatePassword,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const PasswordFormFieldWidget(
-                    label: "Confirme a nova senha"
+                  PasswordFormFieldWidget(
+                    label: "Confirme a nova senha",
+                    controller: forgetPasswordViewModel.confirmPasswordController,
+                    validator: forgetPasswordViewModel.validateConfirmPassword,
                   ),
                   const SizedBox(
                     height: 20,
@@ -40,7 +51,9 @@ class ForgetPasswordPage extends StatelessWidget {
                   ButtonPrimaryWidget(
                     text: "Mudar senha", 
                     onPressed: () {
-                      print("ddd");
+                      if(forgetPasswordViewModel.validate()) {
+                        Navigator.of(context).pushNamedAndRemoveUntil("/login", (e) => false);
+                      }
                     },
                   ),
                   
