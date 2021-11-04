@@ -5,6 +5,7 @@ abstract class ThemesApp {
 
   static ThemeData get primary => ThemeData(
     primaryColor: ColorsApp.primaryColor,
+    backgroundColor: Colors.white,
     appBarTheme: const AppBarTheme(
       color: ColorsApp.primaryColor,
       centerTitle: true
