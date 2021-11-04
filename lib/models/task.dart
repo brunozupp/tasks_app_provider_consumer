@@ -5,12 +5,14 @@ import 'package:tasks_app_provider_consumer/models/enums/priority.dart';
 
 class Task {
   
+  int? id;
   final int userId;
   final String name;
   final String description;
   final Priority priority;
 
   Task({
+    this.id,
     required this.userId,
     required this.name,
     required this.description,
@@ -19,6 +21,7 @@ class Task {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'userId': userId,
       'name': name,
       'description': description,
@@ -28,6 +31,7 @@ class Task {
 
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task(
+      id: map['id'],
       userId: map['userId'],
       name: map['name'],
       description: map['description'],
