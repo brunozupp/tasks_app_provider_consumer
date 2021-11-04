@@ -5,19 +5,19 @@ import 'package:tasks_app_provider_consumer/repositories/interfaces/user_reposit
 class UserRepositoryImpl implements UserRepository {
 
   @override
-  Future<ResponseRepositoryModel<bool>> changePassword({required id, required String password}) {
+  Future<ResponseRepositoryModel<bool>> changePassword({required id, required String password}) async {
     // TODO: implement changePassword
     throw UnimplementedError();
   }
 
   @override
-  Future<ResponseRepositoryModel<User>> getByEmailAndPassword({required String email, required String password}) {
+  Future<ResponseRepositoryModel<User>> getByEmailAndPassword({required String email, required String password}) async {
     // TODO: implement getByEmailAndPassword
     throw UnimplementedError();
   }
 
   @override
-  Future<ResponseRepositoryModel<User>> register(User user) {
+  Future<ResponseRepositoryModel<User>> register(User user) async {
     // TODO: implement insert
     throw UnimplementedError();
   }

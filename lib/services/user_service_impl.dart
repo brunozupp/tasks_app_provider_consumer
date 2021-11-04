@@ -6,19 +6,19 @@ import 'package:tasks_app_provider_consumer/view_models/login_view_model.dart';
 class UserServiceImpl implements UserService {
   
   @override
-  Future<ResponseModel> changePassword({required id, required String password}) {
+  Future<ResponseModel> changePassword({required id, required String password}) async {
     // TODO: implement changePassword
     throw UnimplementedError();
   }
 
   @override
-  Future<ResponseModel> getByEmailAndPassword(LoginViewModel loginViewModel) {
+  Future<ResponseModel> getByEmailAndPassword(LoginViewModel loginViewModel) async {
     // TODO: implement getByEmailAndPassword
     throw UnimplementedError();
   }
 
   @override
-  Future<ResponseModel> register(RegisterViewModel registerViewModel) {
+  Future<ResponseModel> register(RegisterViewModel registerViewModel) async {
     // TODO: implement insert
     throw UnimplementedError();
   }
