@@ -28,6 +28,11 @@ class DashboardPage extends StatelessWidget {
             icon: Icons.task, 
             onTap: () => Navigator.of(context).pushNamed("/tasks"),
           ),
+          CardDashboard(
+            text: "Sair", 
+            icon: Icons.exit_to_app, 
+            onTap: () => Navigator.of(context).pushNamedAndRemoveUntil("/login", (route) => false)
+          ),
         ],
       ),
     );
