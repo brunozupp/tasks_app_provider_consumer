@@ -63,9 +63,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     ButtonPrimaryWidget(
                       text: "Entrar", 
-                      onPressed: () {
-                        print("ddd");
-                      },
+                      onPressed: () => Navigator.of(context).pushNamed("/dashboard"),
                     ),
                     const SizedBox(
                       height: 20,
