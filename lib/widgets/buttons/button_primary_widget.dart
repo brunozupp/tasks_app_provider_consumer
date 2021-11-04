@@ -15,7 +15,7 @@ class ButtonPrimaryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.maxFinite,
+      width: MediaQuery.of(context).size.width,
       child: ElevatedButton(
         child: Text(
           text,
