@@ -12,17 +12,17 @@ class TaskServiceImpl implements TaskService {
     : _taskRepository = taskRepository;
   
   @override
-  Future<ResponseModel> delete(taskId) async {
+  Future<ResponseModel<bool>> delete(taskId) async {
     return await _taskRepository.deleteById(taskId);
   }
 
   @override
-  Future<ResponseModel> getAllByUserId(userId) async {
+  Future<ResponseModel<List<Task>>> getAllByUserId(userId) async {
     return await _taskRepository.getAllByUserId(userId);
   }
 
   @override
-  Future<ResponseModel> insert(TaskFormViewModel taskFormViewModel) async {
+  Future<ResponseModel<Task>> insert(TaskFormViewModel taskFormViewModel) async {
     
     if(!taskFormViewModel.validate()) {
       return ResponseModel.error(
@@ -41,7 +41,7 @@ class TaskServiceImpl implements TaskService {
   }
 
   @override
-  Future<ResponseModel> update(TaskFormViewModel taskFormViewModel) async {
+  Future<ResponseModel<Task>> update(TaskFormViewModel taskFormViewModel) async {
     
     if(!taskFormViewModel.validate()) {
       return ResponseModel.error(

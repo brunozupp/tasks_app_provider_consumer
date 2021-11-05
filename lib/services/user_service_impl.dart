@@ -13,12 +13,12 @@ class UserServiceImpl implements UserService {
     : _userRepository = userRepository;
   
   @override
-  Future<ResponseModel> changePassword({required id, required String password}) async {
+  Future<ResponseModel<bool>> changePassword({required id, required String password}) async {
     return await _userRepository.changePassword(id: id, password: password);
   }
 
   @override
-  Future<ResponseModel> getByEmailAndPassword(LoginViewModel loginViewModel) async {
+  Future<ResponseModel<User>> getByEmailAndPassword(LoginViewModel loginViewModel) async {
 
     if(!loginViewModel.validate()) {
       return ResponseModel.error(
@@ -33,7 +33,7 @@ class UserServiceImpl implements UserService {
   }
 
   @override
-  Future<ResponseModel> register(RegisterViewModel registerViewModel) async {
+  Future<ResponseModel<User>> register(RegisterViewModel registerViewModel) async {
 
     if(!registerViewModel.validate()) {
       return ResponseModel.error(

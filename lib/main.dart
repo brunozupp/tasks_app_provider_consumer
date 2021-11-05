@@ -3,6 +3,9 @@ import 'package:tasks_app_provider_consumer/routes/route_generator.dart';
 import 'package:tasks_app_provider_consumer/styles/themes_app.dart';
 
 void main() {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
