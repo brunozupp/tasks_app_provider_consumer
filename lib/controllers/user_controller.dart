@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:tasks_app_provider_consumer/models/persistence/status_response.dart';
 import 'package:tasks_app_provider_consumer/models/user.dart';
 import 'package:tasks_app_provider_consumer/services/interfaces/user_service.dart';
+import 'package:tasks_app_provider_consumer/view_models/forget_password_view_model.dart';
 import 'package:tasks_app_provider_consumer/view_models/login_view_model.dart';
 import 'package:tasks_app_provider_consumer/view_models/register_view_model.dart';
 import 'package:tasks_app_provider_consumer/view_models/user_general_information_form_view_model.dart';
@@ -37,6 +38,13 @@ class UserController extends ChangeNotifier {
       _user = result.data;
       notifyListeners();
     }
+
+    return StatusResponse.fromResponseModel(responseModel: result);
+  }
+
+  Future<StatusResponse> redefinePassword(ForgetPasswordViewModel forgetPasswordViewModel) async {
+
+    final result = await _userService.changePassword(forgetPasswordViewModel);
 
     return StatusResponse.fromResponseModel(responseModel: result);
   }

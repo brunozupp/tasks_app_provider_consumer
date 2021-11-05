@@ -2,6 +2,7 @@ import 'package:tasks_app_provider_consumer/models/persistence/response_model.da
 import 'package:tasks_app_provider_consumer/models/user.dart';
 import 'package:tasks_app_provider_consumer/repositories/interfaces/user_repository.dart';
 import 'package:tasks_app_provider_consumer/services/interfaces/user_service.dart';
+import 'package:tasks_app_provider_consumer/view_models/forget_password_view_model.dart';
 import 'package:tasks_app_provider_consumer/view_models/register_view_model.dart';
 import 'package:tasks_app_provider_consumer/view_models/login_view_model.dart';
 import 'package:tasks_app_provider_consumer/view_models/user_general_information_form_view_model.dart';
@@ -14,8 +15,18 @@ class UserServiceImpl implements UserService {
     : _userRepository = userRepository;
   
   @override
-  Future<ResponseModel<bool>> changePassword({required id, required String password}) async {
-    return await _userRepository.changePassword(id: id, password: password);
+  Future<ResponseModel<bool>> changePassword(ForgetPasswordViewModel forgetPasswordViewModel) async {
+
+    if(!forgetPasswordViewModel.validate()) {
+      return ResponseModel.error(
+        message: "As validações não foram atendidas"
+      );
+    }
+
+    return await _userRepository.changePassword(
+      email: forgetPasswordViewModel.emailController.text,
+      password: forgetPasswordViewModel.passwordController.text
+    );
   }
 
   @override

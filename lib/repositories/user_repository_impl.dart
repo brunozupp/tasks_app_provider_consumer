@@ -14,12 +14,18 @@ class UserRepositoryImpl implements UserRepository {
   final String tableName = "users";
 
   @override
-  Future<ResponseModel<bool>> changePassword({required id, required String password}) async {
+  Future<ResponseModel<bool>> changePassword({required String email, required String password}) async {
     try {
 
       final database = await _clientSqlite.database;
 
-      final result = await database!.rawUpdate("UPDATE $tableName SET password = ? WHERE id = ?", [password, id]);
+      final existEmail = (await database!.query(tableName, where: "email = ?", whereArgs: [email])).isNotEmpty;
+
+      if(!existEmail) {
+        return ResponseModel.error(message: "Email informado não existe");
+      }
+
+      final result = await database.rawUpdate("UPDATE $tableName SET password = ? WHERE email = ?", [password, email]);
 
       if(result == 0) {
         return ResponseModel.error(message: "Não foi alterado nenhum registro");
@@ -27,7 +33,7 @@ class UserRepositoryImpl implements UserRepository {
         return ResponseModel.error(message: "Foi alterado mais de um registro");
       }
 
-      return ResponseModel.success(data: true);
+      return ResponseModel.success(data: true, message: "Senha redefinida com sucesso");
 
     } catch (e) {
       debugPrint(e.toString());
