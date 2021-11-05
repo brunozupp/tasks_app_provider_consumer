@@ -8,4 +8,6 @@ abstract class UserRepository {
   Future<ResponseModel<User>> register(User user);
 
   Future<ResponseModel<bool>> changePassword({required dynamic id, required String password});
+
+  Future<ResponseModel<User>> changeGeneralInformation({required dynamic id, required User user});
 }

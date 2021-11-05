@@ -47,7 +47,10 @@ class UserRepositoryImpl implements UserRepository {
         return ResponseModel.error(message: "Email e/ou senha incorreto(s)");
       }
 
-      return ResponseModel.success(data: User.fromMap(result.first));
+      User user = User.fromMap(result.first)
+        ..password = "";
+
+      return ResponseModel.success(data: user);
 
     } catch (e) {
       debugPrint(e.toString());
@@ -64,12 +67,35 @@ class UserRepositoryImpl implements UserRepository {
       final result = await database!.insert(tableName, user.toMap());
 
       user.id = result;
+      user.password = "";
 
       return ResponseModel.success(data: user);
 
     } catch (e) {
       debugPrint(e.toString());
       return ResponseModel.error(message: "Erro ao salvar a tarefa");
+    }
+  }
+
+  @override
+  Future<ResponseModel<User>> changeGeneralInformation({required id, required User user}) async {
+    try {
+
+      final database = await _clientSqlite.database;
+
+      final result = await database!.rawUpdate("UPDATE $tableName SET name = ?, email = ? WHERE id = ?", [user.name, user.email, user.id]);
+
+      if(result == 0) {
+        return ResponseModel.error(message: "Não foi alterado nenhum registro");
+      } else if(result > 1) {
+        return ResponseModel.error(message: "Foi alterado mais de um registro");
+      }
+
+      return ResponseModel.success(data: user);
+
+    } catch (e) {
+      debugPrint(e.toString());
+      return ResponseModel.error(message: "Erro ao redefinir a senha");
     }
   }
 
