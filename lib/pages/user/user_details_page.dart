@@ -4,6 +4,8 @@ import 'package:tasks_app_provider_consumer/controllers/user_controller.dart';
 import 'package:tasks_app_provider_consumer/models/user.dart';
 import 'package:tasks_app_provider_consumer/pages/user/components/label_component.dart';
 import 'package:tasks_app_provider_consumer/styles/colors_app.dart';
+import 'package:tasks_app_provider_consumer/utils/snackbar_utils.dart';
+import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
 
 class UserDetailsPage extends StatelessWidget {
   const UserDetailsPage({ Key? key }) : super(key: key);
@@ -33,6 +35,13 @@ class UserDetailsPage extends StatelessWidget {
                 LabelComponent(
                   icon: Icons.email, 
                   information: user.email
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ButtonPrimaryWidget(
+                  text: "Editar", 
+                  onPressed: () => Navigator.of(context).pushNamed("/user/change-general-information", arguments: user),
                 ),
               ],
             );

@@ -4,6 +4,7 @@ import 'package:tasks_app_provider_consumer/models/user.dart';
 import 'package:tasks_app_provider_consumer/services/interfaces/user_service.dart';
 import 'package:tasks_app_provider_consumer/view_models/login_view_model.dart';
 import 'package:tasks_app_provider_consumer/view_models/register_view_model.dart';
+import 'package:tasks_app_provider_consumer/view_models/user_general_information_form_view_model.dart';
 
 class UserController extends ChangeNotifier {
   
@@ -31,6 +32,20 @@ class UserController extends ChangeNotifier {
   Future<StatusResponse> login(LoginViewModel loginViewModel) async {
 
     final result = await _userService.getByEmailAndPassword(loginViewModel);
+
+    if(result.isSuccess) {
+      _user = result.data;
+      notifyListeners();
+    }
+
+    return StatusResponse.fromResponseModel(responseModel: result);
+  }
+
+  Future<StatusResponse> changeGeneralInformation(UserGeneralInformationFormViewModel userGeneralInformationFormViewModel) async {
+
+    final result = await _userService.changeGeneralInformation(
+      userGeneralInformationFormViewModel: userGeneralInformationFormViewModel
+    );
 
     if(result.isSuccess) {
       _user = result.data;

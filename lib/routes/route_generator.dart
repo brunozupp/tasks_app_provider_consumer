@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasks_app_provider_consumer/models/task.dart';
+import 'package:tasks_app_provider_consumer/models/user.dart';
 import 'package:tasks_app_provider_consumer/pages/dashboard/dashboard_page.dart';
 import 'package:tasks_app_provider_consumer/pages/default/error_page.dart';
 import 'package:tasks_app_provider_consumer/pages/default/not_found_page.dart';
@@ -10,6 +11,7 @@ import 'package:tasks_app_provider_consumer/pages/splash/splash_page.dart';
 import 'package:tasks_app_provider_consumer/pages/tasks/task_form_page.dart';
 import 'package:tasks_app_provider_consumer/pages/tasks/tasks_list_page.dart';
 import 'package:tasks_app_provider_consumer/pages/user/user_details_page.dart';
+import 'package:tasks_app_provider_consumer/pages/user/user_form_general_information_page.dart';
 
 abstract class RouteGenerator {
 
@@ -49,6 +51,16 @@ abstract class RouteGenerator {
 
       case "/user":
         return _goTo(const UserDetailsPage());
+
+      case "/user/change-general-information":
+
+        if(args == null || (args is User)) {
+          return _goTo(UserFormGeneralInformationPage(user: args as User));
+        }
+      
+        return _goTo(
+          const ErrorPage(text: "Erro na passagem de parâmetros")
+        );
 
       default:
         return _goTo(const NotFoundPage());
