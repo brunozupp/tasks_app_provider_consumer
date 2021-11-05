@@ -20,6 +20,11 @@ class UserController extends ChangeNotifier {
 
     final result = await _userService.register(registerViewModel);
 
+    if(result.isSuccess) {
+      _user = result.data;
+      notifyListeners();
+    }
+
     return StatusResponse.fromResponseModel(responseModel: result);
   }
 
@@ -27,12 +32,18 @@ class UserController extends ChangeNotifier {
 
     final result = await _userService.getByEmailAndPassword(loginViewModel);
 
+    if(result.isSuccess) {
+      _user = result.data;
+      notifyListeners();
+    }
+
     return StatusResponse.fromResponseModel(responseModel: result);
   }
 
   StatusResponse logout() {
 
     _user = null;
+    notifyListeners();
 
     return StatusResponse.success(message: "Saiu do aplicativo com sucesso");
   }

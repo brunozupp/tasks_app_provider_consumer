@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tasks_app_provider_consumer/controllers/user_controller.dart';
+import 'package:tasks_app_provider_consumer/utils/snackbar_utils.dart';
 import 'package:tasks_app_provider_consumer/view_models/register_view_model.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/password_form_field_widget.dart';
@@ -57,10 +60,16 @@ class RegisterPage extends StatelessWidget {
               ),
               ButtonPrimaryWidget(
                 text: "Registrar", 
-                onPressed: () {
-                  if(registerVM.validate()) {
-                    Navigator.of(context).pushNamedAndRemoveUntil("/dashboard", (e) => false);
+                onPressed: () async {
+
+                  final result = await Provider.of<UserController>(context, listen: false).register(registerVM);
+
+                  if(result.isError) {
+                    SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
+                    return;
                   }
+
+                  Navigator.of(context).pushNamedAndRemoveUntil("/dashboard", (e) => false);
                 },
               ),
               

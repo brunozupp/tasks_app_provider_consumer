@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tasks_app_provider_consumer/controllers/user_controller.dart';
 import 'package:tasks_app_provider_consumer/styles/colors_app.dart';
+import 'package:tasks_app_provider_consumer/utils/snackbar_utils.dart';
 import 'package:tasks_app_provider_consumer/view_models/login_view_model.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_secundary_widget.dart';
@@ -72,10 +75,15 @@ class LoginPage extends StatelessWidget {
                     ),
                     ButtonPrimaryWidget(
                       text: "Entrar", 
-                      onPressed: () {
-                        if(loginVM.validate()) {
-                          Navigator.of(context).pushNamedAndRemoveUntil("/dashboard", (e) => false);
+                      onPressed: () async {
+                        final result = await Provider.of<UserController>(context, listen: false).login(loginVM);
+
+                        if(result.isError) {
+                          SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
+                          return;
                         }
+
+                        Navigator.of(context).pushNamedAndRemoveUntil("/dashboard", (e) => false);
                       },
                     ),
                     const SizedBox(
