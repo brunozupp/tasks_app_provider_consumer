@@ -1,26 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_app_provider_consumer/routes/route_generator.dart';
-import 'package:tasks_app_provider_consumer/styles/themes_app.dart';
+import 'package:provider/provider.dart';
+import 'package:tasks_app_provider_consumer/app_widget.dart';
+import 'package:tasks_app_provider_consumer/controllers/task_controller.dart';
+import 'package:tasks_app_provider_consumer/controllers/user_controller.dart';
+import 'package:tasks_app_provider_consumer/database/client_sqlite.dart';
+import 'package:tasks_app_provider_consumer/repositories/task_repository_impl.dart';
+import 'package:tasks_app_provider_consumer/repositories/user_repository_impl.dart';
+import 'package:tasks_app_provider_consumer/services/task_service_impl.dart';
+import 'package:tasks_app_provider_consumer/services/user_service_impl.dart';
 
 void main() {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
-}
+  runApp(MultiProvider(
+    providers: [
+      
+      ChangeNotifierProvider(
+        create: (context) => UserController(
+          userService: UserServiceImpl(
+            userRepository: UserRepositoryImpl(
+              clientSqlite: ClientSqlite()
+            ),
+          )
+        ),
+      ),
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemesApp.primary,
-      debugShowCheckedModeBanner: false,
-      initialRoute: "/login",
-      onGenerateRoute: RouteGenerator.generateRoutes,
-    );
-  }
+      ChangeNotifierProvider(
+        create: (context) => TaskController(
+          taskService: TaskServiceImpl(
+            taskRepository: TaskRepositoryImpl(
+              clientSqlite: ClientSqlite()
+            ),
+          ),
+        ),
+      ),
+    ],
+    child: const AppWidget(),
+  ));
 }
