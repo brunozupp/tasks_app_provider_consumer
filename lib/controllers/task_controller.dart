@@ -12,13 +12,27 @@ class TaskController extends ChangeNotifier {
     _taskService = taskService;
 
   final List<Task> _tasks = List<Task>.empty(growable: true);
+  List<Task> get tasks => _tasks;
+
+  /* Contexto de uso dessa variável
+   * A fim de evitar o desgaste do meu 'backend' de ficar batendo nele a cada vez que eu entro na tela de
+   * listagem das Tasks, essa variável vai controlar quando vou pedir para o meu banco as Tasks. Depois que
+   * for executado pela primeira vez, vai setar para True para indicar que a partir de agora o meu ponto
+   * de datasource vai ser a minha variável '_tasks'
+   */
+  bool _hasAlreadyGetTasks = false;
 
   Future<StatusResponse> getAllByUserId(dynamic userId) async {
+
+    if(_hasAlreadyGetTasks) return StatusResponse.success();
     
     final result = await _taskService.getAllByUserId(userId);
 
     if(result.data != null) {
       _tasks.addAll(result.data!);
+      
+      _hasAlreadyGetTasks = true;
+
       notifyListeners();
     }
 

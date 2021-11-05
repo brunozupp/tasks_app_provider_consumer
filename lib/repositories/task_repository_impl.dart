@@ -40,7 +40,7 @@ class TaskRepositoryImpl implements TaskRepository {
     try {
       final database = await _clientSqlite.database;
 
-      final result = await database!.query(tableName, where: "id = ?", whereArgs: [userId]);
+      final result = await database!.query(tableName, where: "userId = ?", whereArgs: [userId]);
 
       final tasks = result.map((e) => Task.fromMap(e)).toList();
 

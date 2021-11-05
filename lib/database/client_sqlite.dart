@@ -28,14 +28,33 @@ class ClientSqlite {
 
     final path = join(databasePath, 'tasksapp.db');
 
-    return await openDatabase(
+    // await deleteDatabase(path);
+
+    final database = await openDatabase(
       path, 
       version: 1,
       onCreate: (db,version) async {
-        await db.execute(getSql);
+
+        for (var i = 0; i < TablesConstants.tablesQueries.length; i++) {
+          await db.execute(TablesConstants.tablesQueries[i]); 
+        }
+
       }
     );
+
+    // print("TABELAS CRIADAS");
+    // final tables = await database.rawQuery('SELECT * FROM sqlite_master ORDER BY name;');
+    // tables.forEach((element) {
+    //   print(element);
+    // });
+
+    // final tables = await database.rawQuery('SELECT * FROM tasks;');
+    // tables.forEach((element) {
+    //   print(element);
+    // });
+
+    return database;
   }
 
-  static String get getSql => TablesConstants.userTable + " " + TablesConstants.taskTable;
+  static String get getSql => TablesConstants.userTable + TablesConstants.taskTable;
 }

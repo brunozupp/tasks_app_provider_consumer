@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tasks_app_provider_consumer/controllers/task_controller.dart';
 import 'package:tasks_app_provider_consumer/models/enums/priority.dart';
 import 'package:tasks_app_provider_consumer/models/task.dart';
 import 'package:tasks_app_provider_consumer/styles/colors_app.dart';
 import 'package:tasks_app_provider_consumer/utils/modal_utils.dart';
+import 'package:tasks_app_provider_consumer/utils/snackbar_utils.dart';
 
 enum _Actions { delete, edit, cancel }
 
@@ -49,7 +52,14 @@ class TaskItemComponent extends StatelessWidget {
           onSelected: (_Actions action) async {
             switch(action) {
               case _Actions.delete:
-                await ModalUtils.showModalConfirmation(context);
+                final confirmation = await ModalUtils.showModalConfirmation(context);
+
+                if(confirmation != true) return;
+
+                final result = await Provider.of<TaskController>(context, listen: false).delete(task.id);
+
+                SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
+
                 break;
               case _Actions.edit:
                 Navigator.of(context).pushNamed("/tasks/form", arguments: task);
