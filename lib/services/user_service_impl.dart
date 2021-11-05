@@ -4,6 +4,7 @@ import 'package:tasks_app_provider_consumer/repositories/interfaces/user_reposit
 import 'package:tasks_app_provider_consumer/services/interfaces/user_service.dart';
 import 'package:tasks_app_provider_consumer/view_models/register_view_model.dart';
 import 'package:tasks_app_provider_consumer/view_models/login_view_model.dart';
+import 'package:tasks_app_provider_consumer/view_models/user_general_information_form_view_model.dart';
 
 class UserServiceImpl implements UserService {
 
@@ -48,5 +49,27 @@ class UserServiceImpl implements UserService {
     );
 
     return await _userRepository.register(user);
+  }
+
+  @override
+  Future<ResponseModel<User>> changeGeneralInformation({
+    required UserGeneralInformationFormViewModel userGeneralInformationFormViewModel
+  }) async {
+
+    if(!userGeneralInformationFormViewModel.validate()) {
+      return ResponseModel.error(
+        message: "As validações não foram atendidas"
+      );
+    }
+
+    User user = User(
+      id: userGeneralInformationFormViewModel.id,
+      email: userGeneralInformationFormViewModel.emailController.text,
+      name: userGeneralInformationFormViewModel.nameController.text,
+    );
+
+    return await _userRepository.changeGeneralInformation(
+      user: user
+    );
   }
 }

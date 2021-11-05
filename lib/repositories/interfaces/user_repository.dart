@@ -9,5 +9,5 @@ abstract class UserRepository {
 
   Future<ResponseModel<bool>> changePassword({required dynamic id, required String password});
 
-  Future<ResponseModel<User>> changeGeneralInformation({required dynamic id, required User user});
+  Future<ResponseModel<User>> changeGeneralInformation({required User user});
 }

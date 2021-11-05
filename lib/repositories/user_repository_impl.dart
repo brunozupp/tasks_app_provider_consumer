@@ -78,7 +78,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<ResponseModel<User>> changeGeneralInformation({required id, required User user}) async {
+  Future<ResponseModel<User>> changeGeneralInformation({required User user}) async {
     try {
 
       final database = await _clientSqlite.database;
