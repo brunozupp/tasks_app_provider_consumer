@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tasks_app_provider_consumer/controllers/task_controller.dart';
+import 'package:tasks_app_provider_consumer/controllers/user_controller.dart';
 import 'package:tasks_app_provider_consumer/models/enums/priority.dart';
+import 'package:tasks_app_provider_consumer/models/persistence/status_response.dart';
 import 'package:tasks_app_provider_consumer/models/task.dart';
+import 'package:tasks_app_provider_consumer/utils/snackbar_utils.dart';
 import 'package:tasks_app_provider_consumer/view_models/task_form_view_model.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/dropdown_form_field_widget.dart';
@@ -79,10 +84,26 @@ class TaskFormPage extends StatelessWidget {
               ),
               ButtonPrimaryWidget(
                 text: task == null ? "Registrar" : "Editar", 
-                onPressed: () {
-                  if(taskFormVM.validate()) {
-                    Navigator.of(context).pop();
+                onPressed: () async {
+
+                  taskFormVM.userId ??= Provider.of<UserController>(context, listen: false).user!.id;
+
+                  late final StatusResponse result;
+
+                  if(taskFormVM.id == null) {
+                    result = await Provider.of<TaskController>(context, listen: false).add(taskFormVM);
+                  } else {
+                    result = await Provider.of<TaskController>(context, listen: false).update(taskFormVM);
                   }
+
+                  if(result.isError) {
+                    SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
+                    return;
+                  }
+
+                  SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
+
+                  Navigator.of(context).pop();
                 },
               ),
               
