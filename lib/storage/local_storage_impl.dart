@@ -34,7 +34,10 @@ class LocalStorageImpl implements LocalStorage {
         return true;
       }
 
-      return await storage.containsKey(key: _key);
+      await storage.delete(key: _key);
+
+      return true;
+
     } catch (e) {
       debugPrint(e.toString());
       return false;

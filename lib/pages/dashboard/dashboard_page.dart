@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tasks_app_provider_consumer/controllers/user_controller.dart';
 import 'package:tasks_app_provider_consumer/pages/dashboard/components/card_dashboard.dart';
 import 'package:tasks_app_provider_consumer/styles/colors_app.dart';
 
@@ -31,7 +33,10 @@ class DashboardPage extends StatelessWidget {
           CardDashboard(
             text: "Sair", 
             icon: Icons.exit_to_app, 
-            onTap: () => Navigator.of(context).pushNamedAndRemoveUntil("/login", (route) => false)
+            onTap: () async {
+              await Provider.of<UserController>(context, listen: false).logout();
+              Navigator.of(context).pushNamedAndRemoveUntil("/login", (route) => false);
+            }
           ),
         ],
       ),

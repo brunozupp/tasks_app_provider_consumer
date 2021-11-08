@@ -11,7 +11,7 @@ class AppWidget extends StatelessWidget {
       title: 'Tasks App',
       theme: ThemesApp.primary,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/login",
+      initialRoute: "/",
       onGenerateRoute: RouteGenerator.generateRoutes,
     );
   }

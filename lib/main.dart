@@ -8,6 +8,7 @@ import 'package:tasks_app_provider_consumer/repositories/task_repository_impl.da
 import 'package:tasks_app_provider_consumer/repositories/user_repository_impl.dart';
 import 'package:tasks_app_provider_consumer/services/task_service_impl.dart';
 import 'package:tasks_app_provider_consumer/services/user_service_impl.dart';
+import 'package:tasks_app_provider_consumer/storage/local_storage_impl.dart';
 
 void main() {
 
@@ -22,7 +23,10 @@ void main() {
             userRepository: UserRepositoryImpl(
               clientSqlite: ClientSqlite()
             ),
-          )
+          ),
+          localStorage: LocalStorageImpl(
+            key: "user"
+          ),
         ),
       ),
 
