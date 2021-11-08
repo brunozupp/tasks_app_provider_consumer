@@ -18,18 +18,18 @@ abstract class ModalUtils {
             Row(
               children: [
                 Expanded(
-                  child: ButtonSecundaryWidget(
-                    text: "Sim", 
-                    onPressed: () => Navigator.of(context).pop(true), 
+                  child: ButtonPrimaryWidget(
+                    text: "Não", 
+                    onPressed: () => Navigator.of(context).pop(false), 
                   ),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 Expanded(
-                  child: ButtonPrimaryWidget(
-                    text: "Não", 
-                    onPressed: () => Navigator.of(context).pop(false), 
+                  child: ButtonSecundaryWidget(
+                    text: "Sim", 
+                    onPressed: () => Navigator.of(context).pop(true), 
                   ),
                 ),
               ],

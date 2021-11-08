@@ -82,28 +82,31 @@ class TaskFormPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              ButtonPrimaryWidget(
-                text: task == null ? "Registrar" : "Editar", 
-                onPressed: () async {
+              Consumer<TaskController>(
+                builder: (_,controller,child) {
+                  return ButtonPrimaryWidget(
+                    loading: controller.loading,
+                    text: task == null ? "Registrar" : "Editar", 
+                    onPressed: () async {
 
-                  taskFormVM.userId ??= Provider.of<UserController>(context, listen: false).user!.id;
+                      taskFormVM.userId ??= Provider.of<UserController>(context, listen: false).user!.id;
 
-                  late final StatusResponse result;
+                      late final StatusResponse result;
 
-                  if(taskFormVM.id == null) {
-                    result = await Provider.of<TaskController>(context, listen: false).add(taskFormVM);
-                  } else {
-                    result = await Provider.of<TaskController>(context, listen: false).update(taskFormVM);
-                  }
+                      if(taskFormVM.id == null) {
+                        result = await controller.add(taskFormVM);
+                      } else {
+                        result = await controller.update(taskFormVM);
+                      }
 
-                  if(result.isError) {
-                    SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
-                    return;
-                  }
+                      SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
 
-                  SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
+                      if(result.isSuccess) {
+                        Navigator.of(context).pop();
+                      }
 
-                  Navigator.of(context).pop();
+                    },
+                  );
                 },
               ),
               

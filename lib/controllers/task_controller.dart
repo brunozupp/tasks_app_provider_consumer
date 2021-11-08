@@ -14,6 +14,8 @@ class TaskController extends ChangeNotifier {
   final List<Task> _tasks = List<Task>.empty(growable: true);
   List<Task> get tasks => _tasks;
 
+  bool loading = false;
+
   /* Contexto de uso dessa variável
    * A fim de evitar o desgaste do meu 'backend' de ficar batendo nele a cada vez que eu entro na tela de
    * listagem das Tasks, essa variável vai controlar quando vou pedir para o meu banco as Tasks. Depois que
@@ -22,6 +24,7 @@ class TaskController extends ChangeNotifier {
    */
   bool _hasAlreadyGetTasks = false;
 
+  // Como estou utilizando o FutureBuilder para chamar essa função, não preciso setar o loading aqui
   Future<StatusResponse> getAllByUserId(dynamic userId) async {
 
     if(_hasAlreadyGetTasks) return StatusResponse.success();
@@ -30,10 +33,7 @@ class TaskController extends ChangeNotifier {
 
     if(result.data != null) {
       _tasks.addAll(result.data!);
-      
       _hasAlreadyGetTasks = true;
-
-      notifyListeners();
     }
 
     return StatusResponse.fromResponseModel(responseModel: result);
@@ -41,17 +41,25 @@ class TaskController extends ChangeNotifier {
 
   Future<StatusResponse> add(TaskFormViewModel taskFormViewModel) async {
     
+    loading = true;
+    notifyListeners();
+
     final result = await _taskService.insert(taskFormViewModel);
 
     if(result.data != null) {
       _tasks.add(result.data!);
-      notifyListeners();
     }
+
+    loading = false;
+    notifyListeners();
 
     return StatusResponse.fromResponseModel(responseModel: result);
   }
 
   Future<StatusResponse> update(TaskFormViewModel taskFormViewModel) async {
+
+    loading = true;
+    notifyListeners();
     
     final result = await _taskService.update(taskFormViewModel);
 
@@ -59,21 +67,27 @@ class TaskController extends ChangeNotifier {
 
       _tasks.removeWhere((task) => task.id == taskFormViewModel.id);
       _tasks.add(result.data!);
-
-      notifyListeners();
     }
+
+    loading = false;
+    notifyListeners();
 
     return StatusResponse.fromResponseModel(responseModel: result);
   }
 
   Future<StatusResponse> delete(dynamic id) async {
+
+    loading = true;
+    notifyListeners();
     
     final result = await _taskService.delete(id);
 
     if(result.data != null) {
       _tasks.removeWhere((task) => task.id == id);
-      notifyListeners();
     }
+
+    loading = false;
+    notifyListeners();
 
     return StatusResponse.fromResponseModel(responseModel: result);
   }
