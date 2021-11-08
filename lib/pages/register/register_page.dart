@@ -58,18 +58,23 @@ class RegisterPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              ButtonPrimaryWidget(
-                text: "Registrar", 
-                onPressed: () async {
+              Consumer<UserController>(
+                builder: (_,controller,child) {
+                  return ButtonPrimaryWidget(
+                    text: "Registrar",
+                    loading: controller.loading,
+                    onPressed: () async {
 
-                  final result = await Provider.of<UserController>(context, listen: false).register(registerVM);
+                      final result = await controller.register(registerVM);
 
-                  if(result.isError) {
-                    SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
-                    return;
-                  }
+                      if(result.isError) {
+                        SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
+                        return;
+                      }
 
-                  Navigator.of(context).pushNamedAndRemoveUntil("/dashboard", (e) => false);
+                      Navigator.of(context).pushNamedAndRemoveUntil("/dashboard", (e) => false);
+                    },
+                  );
                 },
               ),
               

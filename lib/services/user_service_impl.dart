@@ -53,6 +53,14 @@ class UserServiceImpl implements UserService {
       );
     }
 
+    final hasEmailRegistered = await hasEmail(registerViewModel.emailController.text);
+
+    if(hasEmailRegistered.data!) {
+      return ResponseModel.error(
+        message: "Esse email já foi cadastrado"
+      );
+    }
+
     User user = User(
       email: registerViewModel.emailController.text,
       name: registerViewModel.nameController.text,
@@ -82,5 +90,10 @@ class UserServiceImpl implements UserService {
     return await _userRepository.changeGeneralInformation(
       user: user
     );
+  }
+
+  @override
+  Future<ResponseModel<bool>> hasEmail(String email) async {
+    return await _userRepository.hasEmail(email);
   }
 }

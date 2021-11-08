@@ -105,4 +105,20 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
+  @override
+  Future<ResponseModel<bool>> hasEmail(String email) async {
+    try {
+
+      final database = await _clientSqlite.database;
+
+      final result = await database!.query(tableName, where: "email = ?", whereArgs: [email]);
+
+      return ResponseModel.success(data: result.isNotEmpty);
+
+    } catch (e) {
+      debugPrint(e.toString());
+      return ResponseModel.error(message: "Erro ao redefinir a senha");
+    }
+  }
+
 }

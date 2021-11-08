@@ -73,17 +73,22 @@ class LoginPage extends StatelessWidget {
                         onPressed: () => Navigator.of(context).pushNamed("/forget-password"), 
                       ),
                     ),
-                    ButtonPrimaryWidget(
-                      text: "Entrar", 
-                      onPressed: () async {
-                        final result = await Provider.of<UserController>(context, listen: false).login(loginVM);
+                    Consumer<UserController>(
+                      builder: (_,controller,child) {
+                        return ButtonPrimaryWidget(
+                          text: "Entrar", 
+                          loading: controller.loading,
+                          onPressed: () async {
+                            final result = await controller.login(loginVM);
 
-                        if(result.isError) {
-                          SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
-                          return;
-                        }
+                            if(result.isError) {
+                              SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
+                              return;
+                            }
 
-                        Navigator.of(context).pushNamedAndRemoveUntil("/dashboard", (e) => false);
+                            Navigator.of(context).pushNamedAndRemoveUntil("/dashboard", (e) => false);
+                          },
+                        );
                       },
                     ),
                     const SizedBox(

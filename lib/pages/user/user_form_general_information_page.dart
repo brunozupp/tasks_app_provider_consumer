@@ -3,10 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:tasks_app_provider_consumer/controllers/user_controller.dart';
 import 'package:tasks_app_provider_consumer/models/user.dart';
 import 'package:tasks_app_provider_consumer/utils/snackbar_utils.dart';
-import 'package:tasks_app_provider_consumer/view_models/register_view_model.dart';
 import 'package:tasks_app_provider_consumer/view_models/user_general_information_form_view_model.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
-import 'package:tasks_app_provider_consumer/widgets/fields/password_form_field_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/fields/text_form_field_widget.dart';
 
 class UserFormGeneralInformationPage extends StatelessWidget {
@@ -26,7 +24,7 @@ class UserFormGeneralInformationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Criar conta"),
+        title: const Text("Editar perfil"),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -52,18 +50,23 @@ class UserFormGeneralInformationPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              ButtonPrimaryWidget(
-                text: "Editar", 
-                onPressed: () async {
+              Consumer<UserController>(
+                builder: (_,controller,child) {
+                  return ButtonPrimaryWidget(
+                    loading: controller.loading,
+                    text: "Editar", 
+                    onPressed: () async {
 
-                  final result = await Provider.of<UserController>(context, listen: false).changeGeneralInformation(userGeneralInformationFormVM);
+                      final result = await controller.changeGeneralInformation(userGeneralInformationFormVM);
 
-                  SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
+                      SnackbarUtils.showSnackbarStatusResponse(context: context, statusResponse: result);
 
-                  if(result.isSuccess) {
-                    Navigator.of(context).pop();
-                  }
-                  
+                      if(result.isSuccess) {
+                        Navigator.of(context).pop();
+                      }
+                      
+                    },
+                  );
                 },
               ),
               

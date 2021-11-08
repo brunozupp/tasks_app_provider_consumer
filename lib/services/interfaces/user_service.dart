@@ -9,6 +9,8 @@ abstract class UserService {
 
   Future<ResponseModel<User>> getByEmailAndPassword(LoginViewModel loginViewModel);
 
+  Future<ResponseModel<bool>> hasEmail(String email);
+
   Future<ResponseModel<User>> register(RegisterViewModel registerViewModel);
 
   Future<ResponseModel<bool>> changePassword(ForgetPasswordViewModel forgetPasswordViewModel);

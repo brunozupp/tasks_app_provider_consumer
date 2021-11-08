@@ -21,10 +21,14 @@ class UserController extends ChangeNotifier {
     _localStorage = localStorage;
 
   User? _user;
-
   User? get user => _user;
 
+  bool loading = false;
+
   Future<StatusResponse> register(RegisterViewModel registerViewModel) async {
+
+    loading = true;
+    notifyListeners();
 
     final result = await _userService.register(registerViewModel);
 
@@ -32,34 +36,49 @@ class UserController extends ChangeNotifier {
       _user = result.data;
 
       await _localStorage.write(_user!.toJson());
-
-      notifyListeners();
     }
+
+    loading = false;
+    notifyListeners();
 
     return StatusResponse.fromResponseModel(responseModel: result);
   }
 
   Future<StatusResponse> login(LoginViewModel loginViewModel) async {
 
+    loading = true;
+    notifyListeners();
+
     final result = await _userService.getByEmailAndPassword(loginViewModel);
 
     if(result.isSuccess) {
       _user = result.data;
       await _localStorage.write(_user!.toJson());
-      notifyListeners();
     }
+
+    loading = false;
+    notifyListeners();
 
     return StatusResponse.fromResponseModel(responseModel: result);
   }
 
   Future<StatusResponse> redefinePassword(ForgetPasswordViewModel forgetPasswordViewModel) async {
 
+    loading = true;
+    notifyListeners();
+
     final result = await _userService.changePassword(forgetPasswordViewModel);
+
+    loading = false;
+    notifyListeners();
 
     return StatusResponse.fromResponseModel(responseModel: result);
   }
 
   Future<StatusResponse> changeGeneralInformation(UserGeneralInformationFormViewModel userGeneralInformationFormViewModel) async {
+
+    loading = true;
+    notifyListeners();
 
     final result = await _userService.changeGeneralInformation(
       userGeneralInformationFormViewModel: userGeneralInformationFormViewModel
@@ -68,16 +87,23 @@ class UserController extends ChangeNotifier {
     if(result.isSuccess) {
       _user = result.data;
       await _localStorage.write(_user!.toJson());
-      notifyListeners();
     }
+
+    loading = false;
+    notifyListeners();
 
     return StatusResponse.fromResponseModel(responseModel: result);
   }
 
   Future<StatusResponse> logout() async {
 
+    loading = true;
+    notifyListeners();
+
     _user = null;
     await _localStorage.delete();
+
+    loading = false;
     notifyListeners();
 
     return StatusResponse.success(message: "Saiu do aplicativo com sucesso");
