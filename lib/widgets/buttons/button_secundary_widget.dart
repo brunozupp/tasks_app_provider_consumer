@@ -32,7 +32,7 @@ class ButtonSecundaryWidget extends StatelessWidget {
             if(states.contains(MaterialState.disabled)) return Colors.grey;
             if(states.contains(MaterialState.pressed)) return ColorsApp.primaryColor.withAlpha(25);
 
-            return Colors.white;
+            return ColorsApp.primaryColor.withAlpha(25);
           }),
           textStyle: MaterialStateProperty.resolveWith((states) {
             if(states.contains(MaterialState.pressed)) {
