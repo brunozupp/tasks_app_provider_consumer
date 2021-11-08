@@ -1,5 +1,3 @@
-import 'package:provider/provider.dart';
-import 'package:tasks_app_provider_consumer/controllers/user_controller.dart';
 import 'package:tasks_app_provider_consumer/models/persistence/response_model.dart';
 import 'package:tasks_app_provider_consumer/models/task.dart';
 import 'package:tasks_app_provider_consumer/repositories/interfaces/task_repository.dart';

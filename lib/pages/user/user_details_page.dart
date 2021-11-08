@@ -3,9 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:tasks_app_provider_consumer/controllers/user_controller.dart';
 import 'package:tasks_app_provider_consumer/models/user.dart';
 import 'package:tasks_app_provider_consumer/pages/user/components/label_component.dart';
-import 'package:tasks_app_provider_consumer/styles/colors_app.dart';
-import 'package:tasks_app_provider_consumer/utils/snackbar_utils.dart';
-import 'package:tasks_app_provider_consumer/widgets/buttons/button_primary_widget.dart';
 import 'package:tasks_app_provider_consumer/widgets/buttons/button_secundary_widget.dart';
 
 class UserDetailsPage extends StatelessWidget {
